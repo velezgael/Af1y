@@ -8,6 +8,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 import sys
 import time
 import webbrowser
@@ -41,8 +42,15 @@ def check_shopify(session: requests.Session, product: dict) -> Result:
         path = path[:-5]
     json_url = urlunsplit((parts.scheme, parts.netloc, path + ".json", "", ""))
     r = session.get(json_url, timeout=15)
-    r.raise_for_status()
-    variants = r.json()["product"]["variants"]
+    if r.ok:
+        variants = r.json()["product"]["variants"]
+    else:
+        # Algunas tiendas (p. ej. Cactus Jack) bloquean el .json; usamos los
+        # datos del producto que vienen incrustados en la propia página.
+        page_url = urlunsplit((parts.scheme, parts.netloc, path, "", ""))
+        r = session.get(page_url, timeout=15)
+        r.raise_for_status()
+        variants = extract_variants_from_html(r.text)
 
     wanted = {str(s).strip().lower() for s in product.get("sizes", []) or []}
     available = []
@@ -58,6 +66,20 @@ def check_shopify(session: requests.Session, product: dict) -> Result:
     if available:
         return Result(True, "Tallas: " + ", ".join(available))
     return Result(False, "sin tallas disponibles" + (" (de las que buscas)" if wanted else ""))
+
+
+_PRODUCT_JSON_RE = re.compile(
+    r"<script[^>]*type=['\"]application/json['\"][^>]*class=['\"]js-product-json['\"][^>]*>(.*?)</script>",
+    re.S | re.I,
+)
+
+
+def extract_variants_from_html(html: str) -> list[dict]:
+    m = _PRODUCT_JSON_RE.search(html)
+    if not m:
+        raise ValueError("no se encontraron los datos del producto en la página")
+    data = json.loads(m.group(1))
+    return (data.get("product") or data)["variants"]
 
 
 def check_page(session: requests.Session, product: dict) -> Result:

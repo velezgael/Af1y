@@ -5,6 +5,11 @@ cuando hay stock en tu talla: Discord, Telegram, pitido y apertura automática d
 navegador en el producto. **La compra la completas tú**, con tu cuenta, así no te
 cancelan el pedido ni te banean por usar bots.
 
+## Cactus Jack (shop.travisscott.com)
+
+`config.example.yaml` ya trae los 3 AF1 '07 RS x GTA VI (Black, Gradient Camo, White).
+Solo cambia `sizes` por tus tallas (US hombre).
+
 ## Instalación
 
 ```bash
@@ -24,7 +29,7 @@ python monitor.py --test-notify   # probar Discord/Telegram
 
 | tipo      | cómo funciona |
 |-----------|---------------|
-| `shopify` | Lee el JSON público del producto (`/products/<handle>.json`) y mira qué variantes están disponibles. Filtra por `sizes`. |
+| `shopify` | Lee el JSON público del producto (`/products/<handle>.json`); si la tienda lo bloquea (como Cactus Jack), usa los datos que vienen en la propia página. Filtra por `sizes`. |
 | `page`    | Descarga la página y busca palabras clave de "en stock" / "agotado". Sirve para la mayoría de tiendas. |
 
 > Nike SNKRS suele lanzar mediante sorteo (Draw): ahí no hay stock que vigilar, apúntate

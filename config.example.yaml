@@ -14,18 +14,27 @@ notifications:
   telegram_bot_token: ""         # token de @BotFather
   telegram_chat_id: ""           # tu chat id
 
+# Tallas US de hombre tal como aparecen en la web de Cactus Jack (3.5 ... 18).
+# Pon las tuyas, o deja la lista vacía [] para avisar con cualquier talla.
 products:
-  # Tipo "shopify": tiendas Shopify (muchas sneaker shops). Usa la URL del producto.
-  # Opcional: "sizes" para avisar solo si hay stock en tus tallas.
-  - name: "AF1 x GTA VI (tienda Shopify)"
+  - name: "AF1 '07 RS x GTA VI — Black"
     type: shopify
-    url: "https://ejemplo-tienda.com/products/air-force-1-gta-vi"
-    sizes: ["9", "9.5", "27.5"]
+    url: "https://shop.travisscott.com/products/air-force-1-07-rs-black-placeholder"
+    sizes: ["9", "9.5"]
 
-  # Tipo "page": cualquier web. Se considera en stock cuando aparece alguno de
-  # "in_stock_keywords" y no aparece ninguno de "out_of_stock_keywords".
-  - name: "AF1 x GTA VI (página genérica)"
-    type: page
-    url: "https://www.ejemplo.com/producto/af1-gta-vi"
-    in_stock_keywords: ["Añadir a la bolsa", "Add to Bag", "Add to cart", "Comprar"]
-    out_of_stock_keywords: ["Agotado", "Sold Out", "Próximamente", "Coming Soon", "Notify me"]
+  - name: "AF1 '07 RS x GTA VI — Gradient Camo"
+    type: shopify
+    url: "https://shop.travisscott.com/products/air-force-1-07-rs-gradient-camo-placeholder"
+    sizes: ["9", "9.5"]
+
+  - name: "AF1 '07 RS x GTA VI — White"
+    type: shopify
+    url: "https://shop.travisscott.com/products/air-force-1-07-rs-white-copy"
+    sizes: ["9", "9.5"]
+
+  # Ejemplo de tipo "page" para cualquier otra tienda (busca palabras clave):
+  # - name: "Otra tienda"
+  #   type: page
+  #   url: "https://www.ejemplo.com/producto/af1-gta-vi"
+  #   in_stock_keywords: ["Add to cart", "Añadir a la bolsa"]
+  #   out_of_stock_keywords: ["Sold Out", "Agotado", "Coming Soon"]
