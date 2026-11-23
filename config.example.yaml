@@ -1,0 +1,31 @@
+# Copia este archivo como config.yaml y edítalo.
+
+# Segundos entre comprobaciones de cada producto (mínimo 30, para no saturar la tienda).
+interval_seconds: 60
+
+# Abrir automáticamente el navegador en el producto cuando haya stock.
+open_browser: true
+
+# Pitido en la terminal cuando haya stock.
+beep: true
+
+notifications:
+  discord_webhook_url: ""        # https://discord.com/api/webhooks/...
+  telegram_bot_token: ""         # token de @BotFather
+  telegram_chat_id: ""           # tu chat id
+
+products:
+  # Tipo "shopify": tiendas Shopify (muchas sneaker shops). Usa la URL del producto.
+  # Opcional: "sizes" para avisar solo si hay stock en tus tallas.
+  - name: "AF1 x GTA VI (tienda Shopify)"
+    type: shopify
+    url: "https://ejemplo-tienda.com/products/air-force-1-gta-vi"
+    sizes: ["9", "9.5", "27.5"]
+
+  # Tipo "page": cualquier web. Se considera en stock cuando aparece alguno de
+  # "in_stock_keywords" y no aparece ninguno de "out_of_stock_keywords".
+  - name: "AF1 x GTA VI (página genérica)"
+    type: page
+    url: "https://www.ejemplo.com/producto/af1-gta-vi"
+    in_stock_keywords: ["Añadir a la bolsa", "Add to Bag", "Add to cart", "Comprar"]
+    out_of_stock_keywords: ["Agotado", "Sold Out", "Próximamente", "Coming Soon", "Notify me"]
